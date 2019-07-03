@@ -1,24 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <title>CRUD TRIP PLANNER VUE PHP MYSQL</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>CRUD VUE PHP MYSQL</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Amatic+SC&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/styles.css" />
+    <!-- http://localhost/vue/crud-vue-php-mysql/ -->
   </head>
   <body>
-    <div id="app">
-      <p>Hello {{ message }}</p>
-    </div>
+    <header>
+      <div class="container">
+        <h1>-Vue, PHP and MySQL-</h1>
+        <h3>Create, Retrieve, Update and Delete all the Trips you want</h3>
+      </div>
+    </header>
 
+    <main>
+      <div class="container">
+        <p>
+          This is a CRUD project to show how to connect Vue with a backend in
+          PHP with a MySQL database!!
+        </p>
+        <!-- <button  class="btn btn-primary" @click="!more">More</button> -->
+        <p v-if="more">
+          This app usecase is to help people to plan their next holiday trips,
+          by noting down all the information, update it whenever they want or
+          delete when cancel.
+        </p>
+
+        <table class="table">
+          <thead>
+            <th>ID</th>
+            <th>WHERE</th>
+            <th>WHEN</th>
+            <th>WHO</th>
+            <th>BUDGET</th>
+            <th>ACTION</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Bali</td>
+              <td>17th September 2019</td>
+              <td>Basketball team and me</td>
+              <td>1500 $</td>
+              <td>
+                <button class="btn btn-warning" @click="editForm=true">
+                  EDIT
+                </button>
+                <button class="btn btn-danger" @click="delete">DELETE</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- <div class="modal"> -->
+        <form>
+          <div class="form-group">
+            <label for="where">Where</label>
+            <input type="text" id="where" placeholder="write here..." />
+          </div>
+          <div class="form-group">
+            <label for="when">When</label>
+            <input type="text" id="when" placeholder="write here..." />
+          </div>
+          <div class="form-group">
+            <label for="who">Who</label>
+            <input type="text" id="who" placeholder="write here..." />
+          </div>
+          <div class="form-group">
+            <label for="budget">Budget</label>
+            <input type="text" id="budget" placeholder="write here..." />
+          </div>
+          <button class="btn btn-primary" type="submit">UPDATE</button>
+        </form>
+        <!-- </div> -->
+      </div>
+    </main>
+
+    <!-- bootstrap: -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- vue: -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+    <!-- axios: -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+
+    <!-- Vue logic: -->
     <script>
       const app = new Vue({
         el: "#app",
         data: {
-          message: "World!"
+          more: false,
+          editForm: true
         }
+        // method: {
+        //   deleted(e) {
+        //     alert("has been deleted!");
+        //   }
+        // }
       });
     </script>
   </body>
