@@ -14,10 +14,11 @@ class DataBase {
     //Create:
     public function create($table, $data) {
         $result = $this->connection->query("INSERT INTO $table VALUES (null.$data") or die($this->connection->error);
-        if($result) {
-            return true;
-        }
-        return false;
+        
+        return $data;// if($result) {
+        //     return true;
+        // }
+        // return false;
     }
 
     //delete:
@@ -39,6 +40,10 @@ class DataBase {
         $result = $this->connection->query("SELECT * FROM $table WHERE $condition") or die($this->connection->error);
         if($result) return $result->fetch_all(MYSQLI_ASSOC); //it returns all rows of an array at once, not like mysqli_fetch_array()
         return false;
+    }
+
+    public function closeConnection() {
+        $this->connection->close();
     }
 
 }
