@@ -19,76 +19,100 @@
     <!-- http://localhost/vue/crud-vue-php-mysql/ -->
   </head>
   <body>
-    <header>
-      <div class="container">
-        <h1>-Vue, PHP and MySQL-</h1>
-        <h3>Create, Retrieve, Update and Delete all the Trips you want</h3>
-      </div>
-    </header>
+    <div id="app">
+      <!-- header: -->
+      <header>
+        <div class="container">
+          <h1>-Vue, PHP and MySQL-</h1>
+          <h3>Create, Retrieve, Update and Delete all the Trips you want</h3>
+        </div>
+      </header>
 
-    <main>
-      <div class="container">
-        <p>
-          This is a CRUD project to show how to connect Vue with a backend in
-          PHP with a MySQL database!!
-        </p>
-        <!-- <button  class="btn btn-primary" @click="!more">More</button> -->
-        <p v-if="more">
-          This app usecase is to help people to plan their next holiday trips,
-          by noting down all the information, update it whenever they want or
-          delete when cancel.
-        </p>
+      <!-- main section: -->
+      <main>
+        <div class="container">
+          <p>
+            This is a CRUD project to show how to connect Vue with a backend in
+            PHP with a MySQL database!!
+          </p>
+          <hr />
+          <p>
+            This app usecase is to help people to plan their next holiday trips,
+            by noting down all the information, update it whenever they want or
+            delete when cancel.
+          </p>
 
-        <table class="table">
-          <thead>
-            <th>ID</th>
-            <th>WHERE</th>
-            <th>WHEN</th>
-            <th>WHO</th>
-            <th>BUDGET</th>
-            <th>ACTION</th>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Bali</td>
-              <td>17th September 2019</td>
-              <td>Basketball team and me</td>
-              <td>1500 $</td>
-              <td>
-                <button class="btn btn-warning" @click="editForm=true">
-                  EDIT
-                </button>
-                <button class="btn btn-danger" @click="delete">DELETE</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+          <table class="table my-5">
+            <thead>
+              <th>ID</th>
+              <th>WHERE</th>
+              <th>WHEN</th>
+              <th>WHO</th>
+              <th>BUDGET</th>
+              <th>ACTION</th>
+            </thead>
+            <tbody>
+              <tr v-for="trip in trips">
+                <td>{{ trip.ID }}</td>
+                <td>
+                  <strong>{{ trip.Where }}</strong>
+                </td>
+                <td>{{ trip.When }}</td>
+                <td>{{ trip.Who }}</td>
+                <td>{{ trip.Budget }}</td>
+                <td>
+                  <button @click="editForm=true" class="btn btn-warning" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                    EDIT
+                  </button>
+                  <button class="btn btn-danger">DELETE</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <button @click="editForm=false" class="btn btn-primary" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                NEW TRIP
+              </button>
 
-        <!-- <div class="modal"> -->
-        <form>
-          <div class="form-group">
-            <label for="where">Where</label>
-            <input type="text" id="where" placeholder="write here..." />
+          <!-- modal: -->
+          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                        <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">{{ editForm ? 'Edit' : 'New' }}</h5>
+                        </div>
+                        <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="where">Where</label>
+                <input type="text" class="form-control" id="where" placeholder="write here..." />
+              </div>
+              <div class="form-group">
+                <label for="when">When</label>
+                <input type="text" class="form-control" id="when" placeholder="write here..." />
+              </div>
+              <div class="form-group">
+                <label for="who">Who</label>
+                <input type="text" class="form-control" id="who" placeholder="write here..." />
+              </div>
+              <div class="form-group">
+                <label for="budget">Budget</label>
+                <input type="text" class="form-control" id="budget" placeholder="write here..." />
+              </div>
+              <button
+                :class="editForm ? 'btn btn-info' : 'btn btn-success'"
+                type="submit"
+                @click="editForm=false"
+              >
+                {{editForm ? 'UPDATE' : 'CREATE'}}
+              </button>
+            </form></div>
+        </div>
+    </div>
+</div>
           </div>
-          <div class="form-group">
-            <label for="when">When</label>
-            <input type="text" id="when" placeholder="write here..." />
-          </div>
-          <div class="form-group">
-            <label for="who">Who</label>
-            <input type="text" id="who" placeholder="write here..." />
-          </div>
-          <div class="form-group">
-            <label for="budget">Budget</label>
-            <input type="text" id="budget" placeholder="write here..." />
-          </div>
-          <button class="btn btn-primary" type="submit">UPDATE</button>
-        </form>
-        <!-- </div> -->
-      </div>
-    </main>
-
+        </div>
+      </main>
+    </div>
     <!-- bootstrap: -->
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -108,24 +132,14 @@
 
     <!-- vue: -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>-->
+    <!-- development version, includes helpful console warnings: -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
     <!-- axios: -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
 
-    <!-- Vue logic: -->
-    <script>
-      const app = new Vue({
-        el: "#app",
-        data: {
-          more: false,
-          editForm: true
-        }
-        // method: {
-        //   deleted(e) {
-        //     alert("has been deleted!");
-        //   }
-        // }
-      });
-    </script>
+    <!-- vue logic document: -->
+    <script src="app.js"></script>
   </body>
 </html>
