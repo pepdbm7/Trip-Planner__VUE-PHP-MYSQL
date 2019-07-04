@@ -41,10 +41,26 @@ switch ($action) {
             $res["error"]=true;
         endif;
 
-
         break;
 
     case "update":
+        $ID = $_POST["ID"];
+        $Where = $_POST["where"];
+        $When = $_POST["when"];
+        $Who = $_POST["who"];
+        $Budget = $_POST["budget"];
+        
+        // concatenating all formdata:
+        $data= "Where='".$Where."',When='".$When."',Who='".$Who."',Budget='".$Budget."'";
+        //calling the method of db_logic that inserts data to db:
+        $u=$db_logic->update("trips", $data, "ID=".$ID);
+
+        if($u):
+            $res["message"]="Successful update!";
+        else:
+            $res["message"]="Failed updating!";
+            $res["error"]=true;
+        endif;
 
         break;
 

@@ -4,23 +4,29 @@ const app = new Vue({
     editForm: false,
     newForm: true,
     selectedTrip: {
+      ID: "",
       where: "",
       when: "",
       who: "",
       budget: ""
     },
-    trips: []
+    trips: [],
   },
   created() {
     this.showTrips();
   },
-  watch: {
-    trips: function(newValue, oldValue) {
-      console.log({ oldValue, newValue });
-    }
+  computed: {
+    isValid() {
+      return (
+        this.selectedTrip.where.trim() &&
+        this.selectedTrip.when.trim() &&
+        this.selectedTrip.who.trim() &&
+        this.selectedTrip.budget.trim()
+        )
+      }
   },
   methods: {
-    showTrips: function() {
+    showTrips() {
       axios
         .get("http://localhost/vue/crud-vue-php-mysql/api.php?action=retrieve")
         .then(res => {
@@ -31,47 +37,53 @@ const app = new Vue({
         .catch(error => console.log(error));
     },
     createTrip() {
-      let formData = new FormData();
-      formData.append("where", this.selectedTrip.where);
-      formData.append("when", this.selectedTrip.when);
-      formData.append("who", this.selectedTrip.who);
-      formData.append("budget", this.selectedTrip.budget);
+        let formData = new FormData();
+        formData.append("where", this.selectedTrip.where);
+        formData.append("when", this.selectedTrip.when);
+        formData.append("who", this.selectedTrip.who);
+        formData.append("budget", this.selectedTrip.budget);
 
-      console.log({ formData });
-
-      var trip = {};
-
-      formData.forEach(function(value, key) {
-        trip[key] = value;
-      });
-
-      //   formData("where", this.$refs.where.value);
-      //   formData("when", this.$refs.when.value);
-      //   formData("who", this.$refs.who.value);
-      //   formData("budget", this.$refs.budget.value);
-
-      axios({
-        method: "post",
-        url: "http://localhost/vue/crud-vue-php-mysql/api.php?action=create",
-        data: formData,
-        config: { headers: { "Content-Type": "multipart/form-data" } }
-      })
-        // .post("http://localhost/vue/crud-vue-php-mysql/api.php?action=create", { formData })
-        .then(res => console.log(res))
-        .catch(error => console.log(error));
+        axios({
+          method: "post",
+          url: "http://localhost/vue/crud-vue-php-mysql/api.php?action=create",
+          data: formData,
+          config: { headers: { "Content-Type": "multipart/form-data" } }
+        })
+          .then(res => {console.log(res); window.location.reload()})
+          .catch(error => console.log(error));
     },
     editTrip() {
-      let formData = new FormData();
-      formData.append("where", this.selectedTrip.where);
-      formData.append("when", this.selectedTrip.when);
-      formData.append("who", this.selectedTrip.who);
-      formData.append("budget", this.selectedTrip.budget);
+        let formData = new FormData();
+        formData.append("ID", this.selectedTrip.ID);
+        formData.append("where", this.selectedTrip.where);
+        formData.append("when", this.selectedTrip.when);
+        formData.append("who", this.selectedTrip.who);
+        formData.append("budget", this.selectedTrip.budget);
 
-      console.log({ formData });
-
-      //   axios.post("http://localhost/vue/crud-vue-php-mysql/api.php?action=retrieve", formData)
-      //   .then(res => {})
-      //   .catch(error => console.log(error));
+        axios({
+          method: "post",
+          url: "http://localhost/vue/crud-vue-php-mysql/api.php?action=update",
+          data: formData,
+          config: { headers: { "Content-Type": "multipart/form-data" } }
+        })
+          .then(res => {console.log(res); 
+          // window.location.reload()
+          })
+          .catch(error => console.log(error));
+    },
+    selected({ ID, Where, When, Who, Budget }) {
+      this.selectedTrip.ID = ID;
+      this.selectedTrip.where = Where;
+      this.selectedTrip.when = When;
+      this.selectedTrip.who = Who;
+      this.selectedTrip.budget = Budget;
+    },
+    emptyFields() {
+      this.selectedTrip.ID = '';
+      this.selectedTrip.where = '';
+      this.selectedTrip.when = '';
+      this.selectedTrip.who = '';
+      this.selectedTrip.budget = '';
     }
   }
 });

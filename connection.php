@@ -14,6 +14,7 @@ class DataBase {
     //retrieve:
     public function retrieve($table, $condition) {
         $result = $this->connection->query("SELECT * FROM $table WHERE $condition") or die($this->connection->error);
+
         if($result) return $result->fetch_all(MYSQLI_ASSOC); //it returns all rows of an array at once, not like mysqli_fetch_array()
         return false;
     }
@@ -24,25 +25,28 @@ class DataBase {
 
         $result = $this->connection->query($sql) or die($this->connection->error);
         
-        if($result) {
-            return true;
-        }
-        return false;
-    }
-
-    //delete:
-    public function delete($table, $condition) {
-        $result = $this->connection->query("DELETE FROM $table WHERE $condition") or die($this->connection->error);
         if($result) return true;
         return false;
     }
 
     //update:
     public function update($table, $fields, $condition) {
-        $result = $this->connection->query("UPDATE $table SET $fields WHERE $condition") or die($this->connection->error);
+        $sql = "UPDATE $table SET $fields WHERE $condition";
+
+        $result = $this->connection->query($sql) or die($this->connection->error);
+
         if($result) return true;
         return false;
     }
+
+    //delete:
+    public function delete($table, $condition) {
+        $result = $this->connection->query("DELETE FROM $table WHERE $condition") or die($this->connection->error);
+        
+        if($result) return true;
+        return false;
+    }
+
 
 }
 
