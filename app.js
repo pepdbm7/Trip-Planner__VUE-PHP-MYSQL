@@ -61,12 +61,14 @@ const app = new Vue({
         .catch(error => console.log(error));
     },
     editTrip() {
-      let formData = {
-        where: this.$refs.where.value,
-        when: this.$refs.when.value,
-        who: this.$refs.who.value,
-        budget: this.$refs.budget.value
-      };
+      let formData = new FormData();
+      formData.append("where", this.selectedTrip.where);
+      formData.append("when", this.selectedTrip.when);
+      formData.append("who", this.selectedTrip.who);
+      formData.append("budget", this.selectedTrip.budget);
+
+      console.log({ formData });
+
       //   axios.post("http://localhost/vue/crud-vue-php-mysql/api.php?action=retrieve", formData)
       //   .then(res => {})
       //   .catch(error => console.log(error));

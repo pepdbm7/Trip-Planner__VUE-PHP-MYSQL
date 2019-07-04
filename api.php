@@ -22,6 +22,7 @@ switch ($action) {
             $res["error"]=true;
         endif;
         break;
+
     case "create":
         $Where = $_POST["where"];
         $When = $_POST["when"];
@@ -30,7 +31,6 @@ switch ($action) {
         
         // concatenating all formdata:
         $data= "'".$Where."','".$When."','".$Who."','".$Budget."'";
-
         //calling the method of db_logic that inserts data to db:
         $u=$db_logic->create("trips", $data);
 
@@ -43,9 +43,11 @@ switch ($action) {
 
 
         break;
+
     case "update":
 
         break;
+
     case "delete":
 
         break;
@@ -58,6 +60,5 @@ switch ($action) {
 //we get a json:
 echo json_encode($res);
 
-$db_logic.closeConnection()
 
 ?>

@@ -11,14 +11,23 @@ class DataBase {
         $this->connection->set_charset("utf8");
     }
 
+    //retrieve:
+    public function retrieve($table, $condition) {
+        $result = $this->connection->query("SELECT * FROM $table WHERE $condition") or die($this->connection->error);
+        if($result) return $result->fetch_all(MYSQLI_ASSOC); //it returns all rows of an array at once, not like mysqli_fetch_array()
+        return false;
+    }
+
     //Create:
     public function create($table, $data) {
-        $result = $this->connection->query("INSERT INTO $table VALUES (null.$data") or die($this->connection->error);
+        $sql = "INSERT INTO $table VALUES (NULL, $data)";
+
+        $result = $this->connection->query($sql) or die($this->connection->error);
         
-        return $data;// if($result) {
-        //     return true;
-        // }
-        // return false;
+        if($result) {
+            return true;
+        }
+        return false;
     }
 
     //delete:
@@ -33,17 +42,6 @@ class DataBase {
         $result = $this->connection->query("UPDATE $table SET $fields WHERE $condition") or die($this->connection->error);
         if($result) return true;
         return false;
-    }
-
-    //retrieve:
-    public function retrieve($table, $condition) {
-        $result = $this->connection->query("SELECT * FROM $table WHERE $condition") or die($this->connection->error);
-        if($result) return $result->fetch_all(MYSQLI_ASSOC); //it returns all rows of an array at once, not like mysqli_fetch_array()
-        return false;
-    }
-
-    public function closeConnection() {
-        $this->connection->close();
     }
 
 }
