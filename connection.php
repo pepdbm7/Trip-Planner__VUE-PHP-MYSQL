@@ -21,30 +21,33 @@ class DataBase {
 
     //Create:
     public function create($table, $data) {
-        $sql = "INSERT INTO $table VALUES (NULL, $data)";
+        $query = "INSERT INTO $table VALUES (NULL, $data)";
 
-        $result = $this->connection->query($sql) or die($this->connection->error);
+        $result = $this->connection->query($query) or die($this->connection->error);
         
         if($result) return true;
         return false;
     }
 
     //update:
-    public function update($table, $fields, $condition) {
-        $sql = "UPDATE $table SET $fields WHERE $condition";
+    public function update($table, $Where, $When, $Who, $Budget, $id) {
+        $query = "UPDATE trips SET `Where` = '$Where', `When` = '$When', `Who` = '$Who', `Budget` = '$Budget' WHERE ID = '$id' ";
 
-        $result = $this->connection->query($sql) or die($this->connection->error);
+        $result = $this->connection->query($query) or die($this->connection->error);
 
         if($result) return true;
         return false;
     }
 
     //delete:
-    public function delete($table, $condition) {
-        $result = $this->connection->query("DELETE FROM $table WHERE $condition") or die($this->connection->error);
+    public function delete($table, $id) {
+        $query = "DELETE FROM $table WHERE ID = $id";
+        $result = $this->connection->query($query);
         
-        if($result) return true;
-        return false;
+        if(!$result) {
+            die('failed deleting');
+        }
+        return true;
     }
 
 

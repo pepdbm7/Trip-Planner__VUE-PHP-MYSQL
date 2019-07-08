@@ -35,7 +35,7 @@ switch ($action) {
         $u=$db_logic->create("trips", $data);
 
         if($u):
-            $res["message"]="Successful insertion!";
+            $res["message"]="Trip successfully created!";
         else:
             $res["message"]="Failed inserting!";
             $res["error"]=true;
@@ -51,12 +51,12 @@ switch ($action) {
         $Budget = $_POST["budget"];
         
         // concatenating all formdata:
-        $data= "Where='".$Where."',When='".$When."',Who='".$Who."',Budget='".$Budget."'";
+        // $data= "Where='".$Where."',When='".$When."',Who='".$Who."',Budget='".$Budget."'";
         //calling the method of db_logic that inserts data to db:
-        $u=$db_logic->update("trips", $data, "ID=".$ID);
+        $u=$db_logic->update("trips", $Where, $When, $Who, $Budget, $ID);
 
         if($u):
-            $res["message"]="Successful update!";
+            $res["message"]="Trip updated as: ".$data."";
         else:
             $res["message"]="Failed updating!";
             $res["error"]=true;
@@ -65,6 +65,16 @@ switch ($action) {
         break;
 
     case "delete":
+        $ID = $_POST['ID'];
+
+        $deleted = $db_logic->delete("trips", "'".$ID."'");
+
+        if($deleted):
+            $res["message"]="Trip ".$ID." deleted!";
+        else:
+            $res["message"]="Failed deleting!";
+            $res["error"]=true;
+        endif;
 
         break;
     
