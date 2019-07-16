@@ -1,9 +1,9 @@
 <?php
 class DataBase {
-    private $host ="localhost";
-    private $user ="root";
-    private $pass = "";
-    private $db = "trip_planner";
+    private $host ="gx97kbnhgjzh3efb.cbetxkdyhwsb.us-east-1.rds.amazonaws.com";
+    private $user ="i2i9d7nfss3b5zmg";
+    private $pass = "imsl7redxsg578po";
+    private $db = "nlejp401rvs1c0lk";
     public $connection;
 
     public function __construct() {
